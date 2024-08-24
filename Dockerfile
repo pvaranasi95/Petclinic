@@ -1,2 +1,4 @@
-FROM nginx
-COPY C:\Program Files\Jenkins\workspace\Maven\targetpetclinic.war /usr/share/nginx/html
+FROM openjdk:8
+EXPOSE 8082
+ADD target/petclinic.war petclinic.war
+ENTRYPOINT ["java","-jar","/petclinic.war"]
