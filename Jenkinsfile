@@ -45,3 +45,5 @@ pipeline {
                 bat 'docker run -d -p 8082:8082 --name pipeline1 pipeline:latest'
     }
 }
+    }
+}
