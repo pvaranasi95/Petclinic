@@ -36,7 +36,7 @@ pipeline {
             steps{
                 script{
                   bat 'cd C:\\Program Files\\Jenkins\\workspace\\Maven' 
-                  bat 'docker build -t pipeline . 
+                  bat 'docker build -t pipeline .'
                 }
                 
             }
