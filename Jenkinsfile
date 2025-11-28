@@ -31,7 +31,8 @@ pipeline {
             }
         }
 
-        stage('Sonar scan') {
+        stage('Sonar scan') 
+        withCredentials([usernamePassword(credentialsId: 'Sonar', passwordVariable: 'Sonar', usernameVariable: 'Sonar')]) {
             steps {
                 bat '''mvn clean verify sonar:sonar \
                 -Dsonar.projectKey=petclinic \
