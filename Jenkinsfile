@@ -35,10 +35,15 @@ pipeline {
 
         stage('Sonar scan') {
             steps {
-                withCredentials([string(credentialsId: 'Sonar', variable: 'Sonar')]) {
-bat """
-mvn clean verify sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.projectName=petclinic -Dsonar.host.url=http://localhost:9000 -Dsonar.token=%Sonar% -Dmaven.project.sourceRoots.warningsDisabled=true
-"""
+                withCredentials([string(credentialsId: 'Sonar', variable: 'SONAR_TOKEN')]) {
+                    bat """
+                        mvn clean verify sonar:sonar ^
+                        -Dsonar.projectKey=petclinic ^
+                        -Dsonar.projectName=petclinic ^
+                        -Dsonar.host.url=http://localhost:9000 ^
+                        -Dsonar.token=%SONAR_TOKEN%
+                        -Dmaven.project.sourceRoots.warningsDisabled=true
+                    """
                 }
             }
         }
