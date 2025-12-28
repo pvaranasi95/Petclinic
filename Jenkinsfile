@@ -34,18 +34,18 @@ pipeline {
         }
 
         stage('Sonar scan') {
-            steps {
-                withCredentials([string(credentialsId: 'Sonar', variable: 'SONAR_TOKEN')]) {
-                    bat """
-                        mvn clean verify sonar:sonar ^
-                        -Dsonar.projectKey=petclinic ^
-                        -Dsonar.projectName=petclinic ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.token=%SONAR_TOKEN% ^
-                        -Dmaven.project.sourceRoots.warningsDisabled=true
-                    """
-                }
-            }
+    steps {
+        withCredentials([string(credentialsId: 'Sonar', variable: 'SONAR_TOKEN')]) {
+            bat """
+            mvn -U verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar ^
+             -Dsonar.projectKey=petclinic ^
+             -Dsonar.projectName=petclinic ^
+             -Dsonar.host.url=http://localhost:9000 ^
+             -Dsonar.token=%SONAR_TOKEN%
+            """
         }
+    }
+}
+
     }
 }
