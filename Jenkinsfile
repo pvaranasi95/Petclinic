@@ -41,7 +41,7 @@ pipeline {
                         -Dsonar.projectKey=petclinic ^
                         -Dsonar.projectName=petclinic ^
                         -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.token=%SONAR_TOKEN%
+                        -Dsonar.token=%SONAR_TOKEN% ^
                         -Dmaven.project.sourceRoots.warningsDisabled=true
                     """
                 }
