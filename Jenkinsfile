@@ -52,15 +52,13 @@ pipeline {
 // }
         
         stage('Publish to Artifactory') {
-            steps {
-            bat """
-bat """
-for %%f in (target\\*.war) do curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% -T "%%f" "http://localhost:8081/artifactory/Test1/%JOB_NAME%/%BUILD_NUMBER%/%%~nxf"
-"""
+    steps {
+        bat """
+            curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% -T "target\\petclinic.war" "http://localhost:8081/artifactory/Test1/%JOB_NAME%/%BUILD_NUMBER%/petclinic.war"
+        """
+    }
+}
 
-"""
-            }
-        }
         stage('Verify Upload') {
     steps {
         bat """
