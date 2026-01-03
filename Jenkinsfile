@@ -1,5 +1,9 @@
 pipeline {
     agent any
+        environment {
+    ARTIFACTORY_CRED = credentials('Jfrog_Artifactory')
+}
+
 
     tools {
         jdk 'JDK17'
@@ -33,19 +37,38 @@ pipeline {
             }
         }
 
-        stage('Sonar scan') {
-    steps {
-        withCredentials([string(credentialsId: 'Sonar', variable: 'SONAR_TOKEN')]) {
+//         stage('Sonar scan') {
+//     steps {
+//         withCredentials([string(credentialsId: 'Sonar', variable: 'SONAR_TOKEN')]) {
+//             bat """
+//             mvn -U verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar ^
+//              -Dsonar.projectKey=petclinic ^
+//              -Dsonar.projectName=petclinic ^
+//              -Dsonar.host.url=http://localhost:9000 ^
+//              -Dsonar.token=%SONAR_TOKEN%
+//             """
+//         }
+//     }
+// }
+        
+        stage('Publish to Artifactory') {
+            steps {
             bat """
-            mvn -U verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar ^
-             -Dsonar.projectKey=petclinic ^
-             -Dsonar.projectName=petclinic ^
-             -Dsonar.host.url=http://localhost:9000 ^
-             -Dsonar.token=%SONAR_TOKEN%
-            """
+bat """
+for %%f in (target\\*.war) do curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% -T "%%f" "http://localhost:8081/artifactory/Test1/%JOB_NAME%/%BUILD_NUMBER%/%%~nxf"
+"""
+
+"""
+            }
         }
+        stage('Verify Upload') {
+    steps {
+        bat """
+        curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% "http://localhost:8081/artifactory/api/storage/Test1/%JOB_NAME%/%BUILD_NUMBER%/"
+        """
     }
 }
+
 
     }
 }
