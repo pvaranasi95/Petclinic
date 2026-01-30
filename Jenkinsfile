@@ -62,7 +62,7 @@ pipeline {
         stage('Verify Upload') {
     steps {
         bat """
-        jf rt u "*" "%JOB_NAME%/%BUILD_NUMBER%/" -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% --url=http://localhost:8082/artifactory/
+        jf rt u "*" "%JOB_NAME%/%BUILD_NUMBER%/" --user=%ARTIFACTORY_CRED_USR% --password=%ARTIFACTORY_CRED_PSW% --url=http://localhost:8082/artifactory/
         """
     }
 }
