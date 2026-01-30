@@ -71,7 +71,7 @@ pipeline {
         stage('Verify Upload') {
     steps {
         bat """
-        jf rt u "*.zip" "%JOB_NAME%/%BUILD_NUMBER%/" --user=%ARTIFACTORY_CRED_USR% --password=%ARTIFACTORY_CRED_PSW% --url=http://localhost:8082/artifactory/
+        curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% "http://localhost:8082/artifactory/api/storage/%JOB_NAME%/%BUILD_NUMBER%/"
         """
     }
 }
