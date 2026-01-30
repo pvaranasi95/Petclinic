@@ -53,9 +53,7 @@ pipeline {
         stage('Packaging the files') {
             steps {
                 powershell '''
-                    $source = Join-Path $env:WORKSPACE '*'
-                    $destination = Join-Path $env:WORKSPACE "$($env:BUILD_NUMBER).zip"
-                    Compress-Archive -Path $source -DestinationPath $destination -Force
+                    7z a "%BUILD_NUMBER%.zip" *
                     '''
             }
         }
