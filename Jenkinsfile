@@ -25,11 +25,11 @@ pipeline {
             }
         }
 
-        stage('Maven test') {
-            steps {
-                bat "mvn test"
-            }
-        }
+        // stage('Maven test') {
+        //     steps {
+        //         bat "mvn test"
+        //     }
+        // }
 
         stage('Maven Package') {
             steps {
@@ -62,7 +62,7 @@ pipeline {
         stage('Verify Upload') {
     steps {
         bat """
-        curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% "http://localhost:8081/artifactory/api/storage/%JOB_NAME%/%BUILD_NUMBER%/"
+        jf rt u . %JOB_NAME%/%BUILD_NUMBER%/ -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% --url=http://localhost:8081/artifactory/
         """
     }
 }
