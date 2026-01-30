@@ -53,7 +53,7 @@ pipeline {
         stage('Packaging the files') {
             steps {
                 powershell '''
-                    7z a "%BUILD_NUMBER%.zip" *
+                    7z a "$($env:BUILD_NUMBER).zip" *
                     '''
             }
         }
