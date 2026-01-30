@@ -54,7 +54,7 @@ pipeline {
         stage('Publish to Artifactory') {
     steps {
         bat """
-            curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% -T "%JOB_NAME%\\*" "http://localhost:8081/artifactory/%JOB_NAME%/%BUILD_NUMBER%/"
+            curl.exe -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% -T "." "http://localhost:8081/artifactory/%JOB_NAME%/%BUILD_NUMBER%/"
         """
     }
 }
