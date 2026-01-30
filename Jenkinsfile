@@ -31,11 +31,11 @@ pipeline {
         //     }
         // }
 
-        stage('Maven Package') {
-            steps {
-                bat "mvn clean install"
-            }
-        }
+        // stage('Maven Package') {
+        //     steps {
+        //         bat "mvn clean install"
+        //     }
+        // }
 
 //         stage('Sonar scan') {
 //     steps {
@@ -62,7 +62,7 @@ pipeline {
         stage('Verify Upload') {
     steps {
         bat """
-        jf rt u . %JOB_NAME%/%BUILD_NUMBER%/ -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% --url=http://localhost:8081/artifactory/
+        jf rt u \* %JOB_NAME%/%BUILD_NUMBER%/ -u %ARTIFACTORY_CRED_USR%:%ARTIFACTORY_CRED_PSW% --url=http://localhost:8081/artifactory/
         """
     }
 }
