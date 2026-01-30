@@ -52,7 +52,7 @@ pipeline {
 // }
         stage('Packaging the files') {
             steps {
-                bat '''
+                powershell '''
                     $source = Join-Path $env:WORKSPACE '*'
                     $destination = Join-Path $env:WORKSPACE '$($env:JOB_NAME)-$($env:BUILD_NUMBER).zip'
                     Compress-Archive -Path $source -DestinationPath $destination -Force
