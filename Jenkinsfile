@@ -50,6 +50,15 @@ pipeline {
 //         }
 //     }
 // }
+        stage('Packaging the files') {
+            steps {
+                bat '''
+                    $source = Join-Path $env:WORKSPACE '*'
+                    $destination = Join-Path $env:WORKSPACE '$($env:JOB_NAME)-$($env:BUILD_NUMBER).zip'
+                    Compress-Archive -Path $source -DestinationPath $destination -Force
+                    '''
+            }
+        }
         
         stage('Publish to Artifactory') {
     steps {
@@ -62,7 +71,7 @@ pipeline {
         stage('Verify Upload') {
     steps {
         bat """
-        jf rt u "*" "%JOB_NAME%/%BUILD_NUMBER%/" --user=%ARTIFACTORY_CRED_USR% --password=%ARTIFACTORY_CRED_PSW% --url=http://localhost:8082/artifactory/
+        jf rt u "*.zip" "%JOB_NAME%/%BUILD_NUMBER%/" --user=%ARTIFACTORY_CRED_USR% --password=%ARTIFACTORY_CRED_PSW% --url=http://localhost:8082/artifactory/
         """
     }
 }
