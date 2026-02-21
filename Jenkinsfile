@@ -1,8 +1,8 @@
 pipeline {
     agent any
-        environment {
-    ARTIFACTORY_CRED = credentials('Jfrog_Artifactory')
-}
+//         environment {
+//     ARTIFACTORY_CRED = credentials('Jfrog_Artifactory')
+// }
 
     stages {
 
