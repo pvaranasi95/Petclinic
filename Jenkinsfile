@@ -61,10 +61,10 @@ pipeline {
 //     }
 // }
     }
-    post{
-        always{
-            script {
-                    def jenkinsBuildData = [
+post {
+    always {
+        script {
+            def jenkinsBuildData = [
                 job_name: env.JOB_NAME,
                 build_number: env.BUILD_NUMBER.toInteger(),
                 status: currentBuild.currentResult,
@@ -74,17 +74,15 @@ pipeline {
             ]
 
             def jsonBody = groovy.json.JsonOutput.toJson(jenkinsBuildData)
-            def jsonBodyEscaped = jsonBody.replace('"', '\\"')
 
             echo "Sending build data to Elasticsearch: ${jsonBody}"
 
-            bat """
-            curl.exe -X POST "http://localhost:9200/jenkins/_doc" ^
-                 -H "Content-Type: application/json" ^
-                 -d "${jsonBodyEscaped}"
+            sh """
+            curl -X POST "http://host.docker.internal:9200/jenkins/_doc" \
+                 -H "Content-Type: application/json" \
+                 -d '${jsonBody}'
             """
-                }
-
         }
     }
+}
 }
