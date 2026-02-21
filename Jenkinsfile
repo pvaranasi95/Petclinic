@@ -77,11 +77,13 @@ post {
 
             echo "Sending build data to Elasticsearch: ${jsonBody}"
 
-            sh """
-            curl -X POST "http://host.docker.internal:9200/jenkins/_doc" \
-                 -H "Content-Type: application/json" \
-                 -d '${jsonBody}'
-            """
+            node {
+                sh """
+                curl -X POST "http://host.docker.internal:9200/jenkins/_doc" \
+                     -H "Content-Type: application/json" \
+                     -d '${jsonBody}'
+                """
+            }
         }
     }
 }
