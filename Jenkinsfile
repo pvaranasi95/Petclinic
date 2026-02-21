@@ -4,12 +4,6 @@ pipeline {
     ARTIFACTORY_CRED = credentials('Jfrog_Artifactory')
 }
 
-
-    tools {
-        jdk 'JDK17'
-        maven 'Maven'
-    }
-
     stages {
 
         stage('Git checkout') {
